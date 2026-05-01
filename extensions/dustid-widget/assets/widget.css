@@ -79,6 +79,88 @@
   text-overflow: ellipsis;
 }
 
+/* ── Selected contact chip ─────────────────────────────────────── */
+
+.dustid-selected-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.75rem 0.45rem 0.45rem;
+  background: var(--dustid-purple-soft);
+  border: 1.5px solid var(--dustid-purple-mid);
+  border-radius: 999px;
+}
+
+.dustid-selected-chip.hidden {
+  display: none;
+}
+
+.dustid-chip-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: var(--font-body-family, sans-serif);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+
+.dustid-chip-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.dustid-chip-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--dustid-purple);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dustid-chip-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground, 18, 18, 18));
+}
+
+.dustid-chip-change {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.25rem;
+  padding: 0.3rem 0.6rem;
+  background: #fff;
+  border: 1.5px solid var(--dustid-purple-mid);
+  border-radius: 999px;
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--dustid-purple);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.dustid-chip-change:hover {
+  background: var(--dustid-purple-soft);
+  border-color: var(--dustid-purple);
+}
+
+.dustid-chip-change svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
 @media (max-width: 600px) {
   .dustid-banner__inner {
     flex-direction: column;
@@ -88,6 +170,11 @@
   .dustid-banner__inner .button {
     width: 100%;
     justify-content: center;
+  }
+
+  .dustid-selected-chip {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 

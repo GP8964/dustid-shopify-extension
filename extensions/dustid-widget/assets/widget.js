@@ -18,6 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const contactsEmpty = document.getElementById("dustid-contacts-empty");
   const contactsBackBtn = document.getElementById("dustid-contacts-back");
 
+  const selectedChip   = document.getElementById("dustid-selected");
+  const chipAvatar     = document.getElementById("dustid-chip-avatar");
+  const chipName       = document.getElementById("dustid-chip-name");
+  const chipChangeBtn  = document.getElementById("dustid-chip-change");
+
   if (!connectBtn || !modal) return;
 
   // Move overlays to <body> so they escape the section's stacking context.
@@ -160,9 +165,19 @@ document.addEventListener("DOMContentLoaded", () => {
   function selectContact(contact) {
     localStorage.setItem("dustid_selected_contact", JSON.stringify(contact));
     contactsModal.classList.add("hidden");
-    const first = contact.name.split(" ")[0];
-    connectBtn.textContent = `Sending to ${first} ✓`;
+
+    chipAvatar.textContent = contact.initials;
+    chipName.textContent   = contact.name;
+    connectBtn.classList.add("hidden");
+    selectedChip.classList.remove("hidden");
   }
+
+  chipChangeBtn.addEventListener("click", () => {
+    loadContacts();
+    contactsModal.classList.remove("hidden");
+    contactSearch.value = "";
+    contactSearch.focus();
+  });
 
   contactsBackBtn.addEventListener("click", () => {
     contactsModal.classList.add("hidden");
