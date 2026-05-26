@@ -1,3 +1,9 @@
+<!-- Dustid runtime config — read by widget.js -->
+<div id="dustid-config"
+     data-app-url="{{ block.settings.app_url }}"
+     data-shop="{{ shop.permanent_domain }}"
+     hidden></div>
+
 <!-- ── Banner ─────────────────────────────────────────────────── -->
 <div class="dustid-banner">
   <div class="dustid-banner__inner">
@@ -159,6 +165,13 @@
 {
   "name": "Dustid Gift Widget",
   "target": "section",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "app_url",
+      "label": "Dustid App URL",
+      "info": "Your deployed Dustid app URL, e.g. https://your-app.fly.dev"
+    }
+  ]
 }
 {% endschema %}

@@ -373,33 +373,68 @@ document.addEventListener("DOMContentLoaded", () => {
     otpCells[0].focus();
   });
 
-  let skipCheckoutIntercept = false;
+  // ── Checkout intercept → Draft Order ────────────────────────────
+  // Selects common checkout button patterns across Shopify themes.
+  const CHECKOUT_SELECTOR = "button#checkout, button[name='checkout'], input[name='checkout']";
 
-  document.addEventListener("click", (e) => {
-    const checkoutBtn = e.target.closest("button#checkout");
+  document.addEventListener("click", async (e) => {
+    const checkoutBtn = e.target.closest(CHECKOUT_SELECTOR);
     if (!checkoutBtn) return;
 
-    if (skipCheckoutIntercept) {
-      skipCheckoutIntercept = false;
-      return;
-    }
+    const contactStr = localStorage.getItem("dustid_selected_contact");
+    if (!contactStr) return; // no contact selected — let normal checkout through
+
+    const config = document.getElementById("dustid-config");
+    const appUrl = config?.dataset.appUrl;
+    const shop = window.Shopify?.shop || config?.dataset.shop;
+
+    if (!appUrl || !shop) return; // misconfigured — fall through
 
     e.preventDefault();
     e.stopPropagation();
 
-    const contact = localStorage.getItem("dustid_selected_contact");
+    checkoutBtn.disabled = true;
+    const originalText = checkoutBtn.textContent;
+    checkoutBtn.textContent = "Preparing gift checkout…";
 
-    fetch("http://127.0.0.1:5000/pre-fill-checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contact: contact ? JSON.parse(contact) : null }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("✅ Response:", data))
-      .catch((err) => console.error("❌ Error:", err))
-      .finally(() => {
-        skipCheckoutIntercept = true;
-        checkoutBtn.click();
+    try {
+      const cartRes = await fetch("/cart.js");
+      const cart = await cartRes.json();
+
+      if (!cart.items?.length) {
+        window.location.href = "/checkout";
+        return;
+      }
+
+      const contact = JSON.parse(contactStr);
+      const res = await fetch(`${appUrl}/api/draft-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          shop,
+          items: cart.items.map((item) => ({
+            variant_id: item.variant_id,
+            quantity: item.quantity,
+          })),
+          contact,
+        }),
       });
+
+      const data = await res.json();
+
+      if (res.ok && data.invoice_url) {
+        window.location.href = data.invoice_url;
+        return;
+      }
+
+      console.error("[dustid] Draft order failed:", data.error);
+    } catch (err) {
+      console.error("[dustid] Checkout intercept error:", err);
+    }
+
+    // Fallback: restore button and let normal checkout proceed
+    checkoutBtn.disabled = false;
+    checkoutBtn.textContent = originalText;
+    window.location.href = "/checkout";
   });
 });
