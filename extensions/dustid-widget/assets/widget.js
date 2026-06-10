@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.textContent = "Sending…";
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/verify", {
+      const res = await fetch("https://dustid-backend-latest.onrender.com/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phoneNumber: phone }),
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resendBtn.textContent = "Resending…";
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/verify", {
+      const res = await fetch("https://dustid-backend-latest.onrender.com/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phoneNumber: phone }),
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     verifyBtn.textContent = "Verifying…";
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/validate-otp", {
+      const res = await fetch("https://dustid-backend-latest.onrender.com/validate-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phoneNumber: phone, otp }),
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearError(contactsError);
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/friends", {
+      const res = await fetch("https://dustid-backend-latest.onrender.com/friends", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
