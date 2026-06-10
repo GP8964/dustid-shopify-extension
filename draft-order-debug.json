@@ -1,0 +1,77 @@
+[
+  {
+    "ts": "2026-06-08T11:31:47.560Z",
+    "shop": "dustid-store-zbfqowxs.myshopify.com",
+    "shippingAddress": {
+      "first_name": "Hannah",
+      "last_name": "Black",
+      "address1": "10 Pine Lane",
+      "address2": "",
+      "city": "Eldoret",
+      "province": "Uasin Gishu",
+      "zip": "30100",
+      "country_code": "KE",
+      "phone": "254700777888"
+    },
+    "lineItems": [
+      {
+        "variant_id": 48732225044708,
+        "quantity": 1
+      }
+    ],
+    "shopifyStatus": 401,
+    "shopifyResponse": {
+      "errors": "[API] Invalid API key or access token (unrecognized login or wrong password)"
+    }
+  },
+  {
+    "ts": "2026-06-08T11:33:29.346Z",
+    "shop": "dustid-store-zbfqowxs.myshopify.com",
+    "shippingAddress": {
+      "first_name": "Hannah",
+      "last_name": "Black",
+      "address1": "10 Pine Lane",
+      "address2": "",
+      "city": "Eldoret",
+      "province": "Uasin Gishu",
+      "zip": "30100",
+      "country_code": "KE",
+      "phone": "254700777888"
+    },
+    "lineItems": [
+      {
+        "variant_id": 48732225044708,
+        "quantity": 1
+      }
+    ],
+    "shopifyStatus": 401,
+    "shopifyResponse": {
+      "errors": "[API] Invalid API key or access token (unrecognized login or wrong password)"
+    }
+  },
+  {
+    "ts": "2026-06-09T10:46:20.971Z",
+    "shop": "dustid-store-zbfqowxs.myshopify.com",
+    "shippingAddress": {
+      "first_name": "Eve",
+      "last_name": "Davis",
+      "address1": "789 Elm Ave",
+      "address2": "",
+      "city": "Kisumu",
+      "province": "Kisumu",
+      "zip": "40100",
+      "country_code": "KE",
+      "phone": "254700555666"
+    },
+    "lineItems": [
+      {
+        "variant_id": 48732225044708,
+        "quantity": 1
+      }
+    ],
+    "shopifyStatus": 401,
+    "shopifyResponse": {
+      "errors": "[API] Invalid API key or access token (unrecognized login or wrong password)"
+    }
+  }
+]

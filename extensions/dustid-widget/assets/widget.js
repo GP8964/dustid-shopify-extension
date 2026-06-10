@@ -381,14 +381,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkoutBtn = e.target.closest(CHECKOUT_SELECTOR);
     if (!checkoutBtn) return;
 
+    alert("[dustid] Checkout button intercepted: " + (checkoutBtn.id || checkoutBtn.name || checkoutBtn.tagName));
+
     const contactStr = localStorage.getItem("dustid_selected_contact");
-    if (!contactStr) return; // no contact selected — let normal checkout through
+    if (!contactStr) { alert("[dustid] STOP: no contact selected in localStorage"); return; }
 
     const config = document.getElementById("dustid-config");
     const appUrl = config?.dataset.appUrl;
     const shop = window.Shopify?.shop || config?.dataset.shop;
 
-    if (!appUrl || !shop) return; // misconfigured — fall through
+    if (!appUrl || !shop) { alert("[dustid] STOP: missing appUrl=" + appUrl + " shop=" + shop); return; }
 
     e.preventDefault();
     e.stopPropagation();
@@ -422,6 +424,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
 
+      alert("[dustid] Draft order response:\n" + JSON.stringify(data, null, 2));
+
       if (res.ok && data.invoice_url) {
         window.location.href = data.invoice_url;
         return;
@@ -429,6 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.error("[dustid] Draft order failed:", data.error);
     } catch (err) {
+      alert("[dustid] Checkout intercept error:\n" + err);
       console.error("[dustid] Checkout intercept error:", err);
     }
 
