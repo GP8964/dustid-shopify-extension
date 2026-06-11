@@ -226,17 +226,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── Step 3: contact selection ────────────────────────────────────
   verifyBtn.addEventListener("click", async () => {
 
-    console.log("Shopify.shop:", shop); //check if this is working here
     const otp = otpCells.map((c) => c.value).join("");
-    console.log("Verifying OTP:", otp); //debug log
     if (otp.length < otpCells.length) {
       otpCells.find((c) => !c.value)?.focus();
-      console.log("OTP incomplete:", otp); //debug log
-      console.log("OTP length received:", otp.length); //debug log
-      console.log("Expected OTP length:", otpCells.length); //debug log
       return;
     }
-    console.log("OTP complete:", otp); //debug log
 
     const phone = localStorage.getItem("dustid_phone");
     clearError(otpError);
