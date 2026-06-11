@@ -16,7 +16,7 @@ database.sqlite
 .env
 .env.*
 
-
+/dustid-extension-1/*
 
 
 

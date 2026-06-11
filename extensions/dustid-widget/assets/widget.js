@@ -99,8 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch("https://dustid-backend-latest.onrender.com/verify", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber: phone }),
+        headers: {
+          "Content-Type": "application/json",
+          shop: Shopify.shop
+        },
+        body: JSON.stringify({
+          phoneNumber: phone
+        }),
       });
 
       if (!res.ok) {
@@ -177,8 +182,13 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch("https://dustid-backend-latest.onrender.com/verify", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber: phone }),
+        headers: {
+          "Content-Type": "application/json",
+          shop: Shopify.shop
+        },
+        body: JSON.stringify({
+          phoneNumber: phone
+        }),
       });
 
       if (res.ok) {
@@ -217,8 +227,14 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch("https://dustid-backend-latest.onrender.com/validate-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber: phone, otp }),
+        headers: {
+          "Content-Type": "application/json",
+          shop: Shopify.shop
+         },
+        body: JSON.stringify({
+          phoneNumber: phone,
+          otp
+        }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -295,7 +311,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const res = await fetch("https://dustid-backend-latest.onrender.com/friends", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          shop: Shopify.shop
+        },
       });
 
       const data = await res.json().catch(() => ({}));
