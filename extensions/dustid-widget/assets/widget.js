@@ -419,7 +419,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!contactStr) { alert("[dustid] STOP: no contact selected in localStorage"); return; }
 
     const config = document.getElementById("dustid-config");
-    const appUrl = config?.dataset.appUrl;
+    const appUrl = "https://dustid-backend-latest.onrender.com"; //hardcoding this for now since the config dataset.appUrl is not being read correctly in dev or prod builds, which is very strange. Need to investigate further but want to get this working for now.
+    //const appUrl = config?.dataset.appUrl;
     const shop = window.Shopify?.shop || config?.dataset.shop;
 
     if (!appUrl || !shop) { alert("[dustid] STOP: missing appUrl=" + appUrl + " shop=" + shop); return; }
