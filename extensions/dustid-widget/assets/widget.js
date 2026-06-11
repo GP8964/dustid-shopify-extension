@@ -27,6 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const chipName = document.getElementById("dustid-chip-name");
   const chipChangeBtn = document.getElementById("dustid-chip-change");
 
+  // Get shop from global Shopify object or fallback to data attribute (for dev/testing)
+  const config = document.getElementById("dustid-config");
+  const shop = window.Shopify?.shop || config?.dataset.shop;
+
+  // debugging the verify button click handler to check if it is firing at all
+  verifyBtn.addEventListener("click", async () => {
+    console.log("Shopify.shop:", shop);
+  });
+
   if (!connectBtn || !modal) return;
 
   function showError(el, msg) {
@@ -101,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          shop: Shopify.shop
+          shop: shop
         },
         body: JSON.stringify({
           phoneNumber: phone
@@ -184,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          shop: Shopify.shop
+          shop: shop
         },
         body: JSON.stringify({
           phoneNumber: phone
@@ -229,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          shop: Shopify.shop
+          shop: shop
          },
         body: JSON.stringify({
           phoneNumber: phone,
