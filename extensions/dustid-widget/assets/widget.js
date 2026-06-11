@@ -31,11 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const config = document.getElementById("dustid-config");
   const shop = window.Shopify?.shop || config?.dataset.shop;
 
-  // debugging the verify button click handler to check if it is firing at all
+  // This one is firing correctly, but another inside the verifyBtn click handler is not, which is very strange.
+  // Adding this log here to confirm that the shop variable is being read correctly.
+  /*
   verifyBtn.addEventListener("click", async () => {
     console.log("Shopify.shop:", shop);
   });
-
+  */
+ 
   if (!connectBtn || !modal) return;
 
   function showError(el, msg) {
@@ -222,11 +225,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ── Step 3: contact selection ────────────────────────────────────
   verifyBtn.addEventListener("click", async () => {
+
+    console.log("Shopify.shop:", shop); //check if this is working here
     const otp = otpCells.map((c) => c.value).join("");
+    console.log("Verifying OTP:", otp); //debug log
     if (otp.length < otpCells.length) {
       otpCells.find((c) => !c.value)?.focus();
+      console.log("OTP incomplete:", otp); //debug log
+      console.log("OTP length received:", otp.length); //debug log
+      console.log("Expected OTP length:", otpCells.length); //debug log
       return;
     }
+    console.log("OTP complete:", otp); //debug log
 
     const phone = localStorage.getItem("dustid_phone");
     clearError(otpError);
