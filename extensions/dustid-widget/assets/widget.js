@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Get shop from global Shopify object or fallback to data attribute (for dev/testing)
   const config = document.getElementById("dustid-config");
   const shop = window.Shopify?.shop || config?.dataset.shop;
-
+  const defaultBackendURL = "https://dustid-backend-latest.onrender.com/";  // Default backend URL
   // This one is firing correctly, but another inside the verifyBtn click handler is not, which is very strange.
   // Adding this log here to confirm that the shop variable is being read correctly.
   /*
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.textContent = "Sending…";
 
     try {
-      const res = await fetch("https://dustid-backend-latest.onrender.com/verify", {
+      const res = await fetch(defaultBackendURL + "verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resendBtn.textContent = "Resending…";
 
     try {
-      const res = await fetch("https://dustid-backend-latest.onrender.com/verify", {
+      const res = await fetch(defaultBackendURL + "verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
     verifyBtn.textContent = "Verifying…";
 
     try {
-      const res = await fetch("https://dustid-backend-latest.onrender.com/validate-otp", {
+      const res = await fetch(defaultBackendURL + "validate-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -323,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearError(contactsError);
 
     try {
-      const res = await fetch("https://dustid-backend-latest.onrender.com/friends", {
+      const res = await fetch(defaultBackendURL + "friends", {
         headers: {
           Authorization: `Bearer ${token}`,
           shop: Shopify.shop
@@ -419,8 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!contactStr) { alert("[dustid] STOP: no contact selected in localStorage"); return; }
 
     const config = document.getElementById("dustid-config");
-    const appUrl = "https://dustid-backend-latest.onrender.com"; //hardcoding this for now since the config dataset.appUrl is not being read correctly in dev or prod builds, which is very strange. Need to investigate further but want to get this working for now.
-    //const appUrl = config?.dataset.appUrl;
+    const appUrl = config?.dataset.appUrl || defaultBackendURL;  // Fallback to default backend URL if not set in data attribute
     const shop = window.Shopify?.shop || config?.dataset.shop;
 
     if (!appUrl || !shop) { alert("[dustid] STOP: missing appUrl=" + appUrl + " shop=" + shop); return; }
