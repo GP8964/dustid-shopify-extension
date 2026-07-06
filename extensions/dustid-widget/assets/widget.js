@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Get shop from global Shopify object or fallback to data attribute (for dev/testing)
   const config = document.getElementById("dustid-config");
   const shop = window.Shopify?.shop || config?.dataset.shop;
-  const defaultBackendURL = "https://dustid-backend-latest.onrender.com/";  // Default backend URL
+  const defaultBackendURL = "https://dustid-backend-latest.onrender.com";  // Default backend URL
   // This one is firing correctly, but another inside the verifyBtn click handler is not, which is very strange.
   // Adding this log here to confirm that the shop variable is being read correctly.
   /*
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.textContent = "Sending…";
 
     try {
-      const res = await fetch(defaultBackendURL + "verify", {
+      const res = await fetch(defaultBackendURL + "/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resendBtn.textContent = "Resending…";
 
     try {
-      const res = await fetch(defaultBackendURL + "verify", {
+      const res = await fetch(defaultBackendURL + "/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
     verifyBtn.textContent = "Verifying…";
 
     try {
-      const res = await fetch(defaultBackendURL + "validate-otp", {
+      const res = await fetch(defaultBackendURL + "/validate-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -323,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearError(contactsError);
 
     try {
-      const res = await fetch(defaultBackendURL + "friends", {
+      const res = await fetch(defaultBackendURL + "/friends", {
         headers: {
           Authorization: `Bearer ${token}`,
           shop: Shopify.shop
@@ -414,6 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!checkoutBtn) return;
 
     // debugging alert to confirm that the checkout button is being intercepted correctly
+    alert("Please wait while we prepare your gift checkout. You will be redirected shortly.");
     //alert("[dustid] Checkout button intercepted: " + (checkoutBtn.id || checkoutBtn.name || checkoutBtn.tagName));
 
     const contactStr = localStorage.getItem("dustid_selected_contact");
@@ -431,6 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     e.preventDefault();
     e.stopPropagation();
+    e.stopImmediatePropagation();
 
     checkoutBtn.disabled = true;
     const originalText = checkoutBtn.textContent;
@@ -461,15 +463,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
 
-      // Debugging alert to show the draft order response
-      //alert("[dustid] Draft order response:\n" + JSON.stringify(data, null, 2));
-
-      if (res.ok && data.invoice_url) {
-        window.location.href = data.invoice_url;
+      const checkoutUrl = typeof data.invoice_url === "string" ? data.invoice_url.trim() : "";
+      if (res.ok && checkoutUrl) {
+        console.log("[dustid] Draft order created successfully. Redirecting to invoice:", checkoutUrl);
+        checkoutBtn.textContent = "Redirecting to gift checkout…";
+        window.location.href = checkoutUrl;
+        console.log("[dustid] Should be redirected to checkout:", checkoutUrl);
+        
         return;
       }
 
-      console.error("[dustid] Draft order failed:", data.error);
+      console.error("[dustid] Draft order failed:", data.error, data);
+      alert("[dustid] Draft order failed. Please try again.");
     } catch (err) {
       alert("[dustid] Checkout intercept error:\n" + err);
       console.error("[dustid] Checkout intercept error:", err);
