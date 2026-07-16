@@ -448,9 +448,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const contact = JSON.parse(contactStr);
+      const token = localStorage.getItem("dustid_token");
       const res = await fetch(`${appUrl}/api/draft-order`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({
           shop,
           items: cart.items.map((item) => ({
