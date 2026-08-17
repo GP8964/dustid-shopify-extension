@@ -26,6 +26,7 @@
     <button type="button" class="button button--primary" id="d-signin">
       Connect to Dustid
     </button>
+    <button type="button" class="dustid-logout hidden" id="d-logout">Logout</button>
 
     <!-- shown after a contact is selected -->
     <div id="dustid-selected" class="dustid-selected-chip hidden">
@@ -68,13 +69,31 @@
       <p class="dustid-panel__eyebrow">Step 1 of 3</p>
       <h3 class="dustid-panel__title">Your phone number</h3>
       <p class="dustid-panel__hint">We'll send a one-time code to verify it's you</p>
-      <input
-        type="tel"
-        id="dustid-phone"
-        class="dustid-field"
-        placeholder="+1 (555) 000-0000"
-        autocomplete="tel"
-      />
+      <div class="dustid-phone-fields">
+        <label class="dustid-phone-field">
+          <span class="dustid-phone-label">Area code</span>
+          <input
+            type="text"
+            id="dustid-area-code"
+            class="dustid-field dustid-field--compact"
+            value="254"
+            inputmode="numeric"
+            maxlength="4"
+            autocomplete="tel-country-code"
+          />
+        </label>
+        <label class="dustid-phone-field">
+          <span class="dustid-phone-label">Phone number</span>
+          <input
+            type="tel"
+            id="dustid-phone"
+            class="dustid-field dustid-field--compact"
+            placeholder="712 345 678"
+            autocomplete="tel"
+            inputmode="numeric"
+          />
+        </label>
+      </div>
       <p id="dustid-phone-error" class="dustid-error hidden" aria-live="polite"></p>
       <button class="button button--primary dustid-btn-full" id="dustid-connect">
         Continue
@@ -133,15 +152,13 @@
         <span class="dustid-step-line dustid-step-line--done"></span>
         <span class="dustid-step dustid-step--on"></span>
       </div>
-      <button type="button" class="dustid-close" id="dustid-contacts-back" aria-label="Go back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"/>
-        </svg>
+      <button type="button" class="dustid-close dustid-logout-btn" id="dustid-contacts-back" aria-label="Logout">
+        Logout
       </button>
     </div>
     <div class="dustid-panel__body">
       <p class="dustid-panel__eyebrow">Step 3 of 3</p>
+      <p id="dustid-welcome-message" class="dustid-panel__welcome hidden" aria-live="polite"></p>
       <h3 class="dustid-panel__title">Who are you sending to?</h3>
       <p class="dustid-panel__hint">Contacts who have shared their address with you</p>
       <input

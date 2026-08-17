@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const connectBtn = document.getElementById("d-signin");
+  const logoutBtn = document.getElementById("d-logout");
   const modal = document.getElementById("dustid-modal");
   const cancelBtn = document.getElementById("dustid-cancel");
   const submitBtn = document.getElementById("dustid-connect");
+  const areaCodeInput = document.getElementById("dustid-area-code");
   const phoneInput = document.getElementById("dustid-phone");
 
   const otpModal = document.getElementById("dustid-otp-modal");
@@ -26,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const chipAvatar = document.getElementById("dustid-chip-avatar");
   const chipName = document.getElementById("dustid-chip-name");
   const chipChangeBtn = document.getElementById("dustid-chip-change");
+  const welcomeMessage = document.getElementById("dustid-welcome-message");
 
   // Get shop from global Shopify object or fallback to data attribute (for dev/testing)
   const config = document.getElementById("dustid-config");
@@ -70,6 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
         clearAuth();
         return;
       }
+      if (payload.firstName) {
+        welcomeMessage.textContent = `Welcome, ${payload.firstName}!`;
+        welcomeMessage.classList.remove("hidden");
+      }
     } catch {
       clearAuth();
       return;
@@ -80,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       chipAvatar.textContent = contact.initials;
       chipName.textContent = contact.name;
       connectBtn.classList.add("hidden");
+      logoutBtn.classList.remove("hidden");
       selectedChip.classList.remove("hidden");
     } catch {
       localStorage.removeItem("dustid_selected_contact");
@@ -89,18 +97,52 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── Step 1: phone ────────────────────────────────────────────────
   connectBtn.addEventListener("click", () => {
     modal.classList.remove("hidden");
-    phoneInput.focus();
+    areaCodeInput.focus();
+  });
+
+  logoutBtn.addEventListener("click", async () => {
+    const token = localStorage.getItem("dustid_token");
+    if (token) {
+      try {
+        await fetch(defaultBackendURL + "/logout", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } catch {
+        // ignore backend logout errors and clear local session anyway
+      }
+    }
+
+    clearAuth();
+    modal.classList.add("hidden");
+    otpModal.classList.add("hidden");
+    contactsModal.classList.add("hidden");
+    areaCodeInput.value = "254";
+    phoneInput.value = "";
+    otpCells.forEach((c) => (c.value = ""));
+    contactSearch.value = "";
+    cachedContacts = [];
+    renderContacts([]);
   });
 
   cancelBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
+    areaCodeInput.value = "254";
     phoneInput.value = "";
   });
 
   submitBtn.addEventListener("click", async () => {
+    const areaCode = areaCodeInput.value.trim();
     const phone = phoneInput.value.trim();
-    if (!phone) {
-      phoneInput.focus();
+    const fullPhone = `${areaCode}${phone}`.replace(/\D/g, "");
+    if (!areaCode || !phone) {
+      if (!areaCode) {
+        areaCodeInput.focus();
+      } else {
+        phoneInput.focus();
+      }
       return;
     }
 
@@ -116,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
           shop: shop
         },
         body: JSON.stringify({
-          phoneNumber: phone
+          phoneNumber: fullPhone
         }),
       });
 
@@ -129,9 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      localStorage.setItem("dustid_phone", phone);
+      localStorage.setItem("dustid_phone", fullPhone);
       modal.classList.add("hidden");
-      otpPhoneLabel.textContent = phone;
+      otpPhoneLabel.textContent = fullPhone;
       otpCells.forEach((c) => (c.value = ""));
       otpModal.classList.remove("hidden");
       otpCells[0].focus();
@@ -144,6 +186,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   phoneInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") submitBtn.click();
+  });
+
+  areaCodeInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") submitBtn.click();
   });
 
@@ -261,6 +307,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.token) {
         localStorage.setItem("dustid_token", data.token);
+        connectBtn.classList.add("hidden");
+        logoutBtn.classList.remove("hidden");
+      }
+
+      if (data.firstName) {
+        welcomeMessage.textContent = `Welcome, ${data.firstName}!`;
+        welcomeMessage.classList.remove("hidden");
       }
 
       otpModal.classList.add("hidden");
@@ -313,9 +366,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function clearAuth() {
     localStorage.removeItem("dustid_token");
+    localStorage.removeItem("dustid_phone");
     localStorage.removeItem("dustid_selected_contact");
     selectedChip.classList.add("hidden");
     connectBtn.classList.remove("hidden");
+    logoutBtn.classList.add("hidden");
+    welcomeMessage.textContent = "";
+    welcomeMessage.classList.add("hidden");
   }
 
   async function loadContacts() {
@@ -385,6 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
     chipAvatar.textContent = contact.initials;
     chipName.textContent = contact.name;
     connectBtn.classList.add("hidden");
+    logoutBtn.classList.remove("hidden");
     selectedChip.classList.remove("hidden");
 
     console.log("📍 Selected contact address:", contact.address ?? contact);
@@ -398,11 +456,30 @@ document.addEventListener("DOMContentLoaded", () => {
     contactSearch.focus();
   });
 
-  contactsBackBtn.addEventListener("click", () => {
+  contactsBackBtn.addEventListener("click", async () => {
+    const token = localStorage.getItem("dustid_token");
+    if (token) {
+      try {
+        await fetch(defaultBackendURL + "/logout", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } catch {
+        // ignore backend logout errors and clear local session anyway
+      }
+    }
+
+    clearAuth();
     contactsModal.classList.add("hidden");
+    modal.classList.add("hidden");
+    areaCodeInput.value = "254";
+    phoneInput.value = "";
     otpCells.forEach((c) => (c.value = ""));
-    otpModal.classList.remove("hidden");
-    otpCells[0].focus();
+    contactSearch.value = "";
+    cachedContacts = [];
+    renderContacts([]);
   });
 
   // ── Checkout intercept → Draft Order ────────────────────────────

@@ -13,6 +13,23 @@
   --dustid-purple-glow:  rgba(124, 58, 237, 0.18);
 }
 
+/* ── Button accents ───────────────────────────────────────────── */
+.dustid-banner .button,
+.dustid-panel .button,
+.dustid-btn-primary {
+  background: var(--dustid-purple) !important;
+  border-color: var(--dustid-purple) !important;
+  color: #ffffff !important;
+}
+
+.dustid-banner .button:hover,
+.dustid-panel .button:hover,
+.dustid-btn-primary:hover {
+  background: #6d28d9 !important;
+  border-color: #6d28d9 !important;
+  color: #ffffff !important;
+}
+
 /* ── 1. Banner ─────────────────────────────────────────────────── */
 
 .dustid-banner {
@@ -179,6 +196,10 @@
   .dustid-selected-chip {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .dustid-phone-fields {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -368,6 +389,81 @@
 .dustid-field:focus {
   border-color: var(--dustid-purple);
   box-shadow: 0 0 0 3px var(--dustid-purple-soft);
+}
+
+.dustid-phone-fields {
+  display: grid;
+  grid-template-columns: minmax(90px, 110px) 1fr;
+  gap: 0.65rem;
+}
+
+.dustid-phone-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.dustid-phone-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--dustid-purple);
+}
+
+.dustid-field--compact {
+  padding: 0.7rem 0.85rem;
+}
+
+.dustid-panel__welcome {
+  margin: 0 0 0.15rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--dustid-purple);
+}
+
+.dustid-panel__welcome.hidden {
+  display: none;
+}
+
+.dustid-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(124, 58, 237, 0.16);
+  border-radius: 999px;
+  background: var(--dustid-purple-soft);
+  color: var(--dustid-purple);
+  font-family: var(--font-body-family, sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.dustid-logout:hover {
+  background: rgba(124, 58, 237, 0.18);
+  border-color: var(--dustid-purple-mid);
+}
+
+.dustid-logout.hidden {
+  display: none;
+}
+
+.dustid-logout-btn {
+  width: auto;
+  height: auto;
+  padding: 0.42rem 0.75rem;
+  border-radius: 999px;
+  background: var(--dustid-purple-soft);
+  color: var(--dustid-purple);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.dustid-logout-btn:hover {
+  background: rgba(124, 58, 237, 0.18);
 }
 
 /* ── 9. Full-width button modifier ─────────────────────────────── */
