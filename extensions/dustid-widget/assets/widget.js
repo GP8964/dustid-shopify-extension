@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Get shop from global Shopify object or fallback to data attribute (for dev/testing)
   const config = document.getElementById("dustid-config");
   const shop = window.Shopify?.shop || config?.dataset.shop;
-  const defaultBackendURL = "https://dustid-backend-latest.onrender.com";  // Default backend URL
+  const defaultBackendURL = "https://dustid-backend-latest-kg5d.onrender.com/";  // Default backend URL
   // This one is firing correctly, but another inside the verifyBtn click handler is not, which is very strange.
   // Adding this log here to confirm that the shop variable is being read correctly.
   /*
