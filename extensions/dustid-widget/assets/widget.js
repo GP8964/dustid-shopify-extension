@@ -44,6 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
  
   if (!connectBtn || !modal) return;
 
+  // Remove any stale placeholder left by a cached Shopify section render.
+  phoneInput.removeAttribute("placeholder");
+
   function showError(el, msg) {
     el.textContent = msg;
     el.classList.remove("hidden");

@@ -391,6 +391,14 @@
   box-shadow: 0 0 0 3px var(--dustid-purple-soft);
 }
 
+.dustid-country-select {
+  cursor: pointer;
+}
+
+#dustid-phone::placeholder {
+  color: transparent;
+}
+
 .dustid-phone-fields {
   display: grid;
   grid-template-columns: minmax(90px, 110px) 1fr;
