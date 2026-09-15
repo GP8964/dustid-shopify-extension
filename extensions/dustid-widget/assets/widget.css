@@ -401,7 +401,7 @@
 
 .dustid-phone-fields {
   display: grid;
-  grid-template-columns: minmax(90px, 110px) 1fr;
+  grid-template-columns: minmax(155px, 1fr) minmax(0, 2fr);
   gap: 0.65rem;
 }
 
