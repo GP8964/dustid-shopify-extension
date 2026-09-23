@@ -100,7 +100,7 @@ export async function action({ request }: ActionFunctionArgs) {
         draft_order: {
           line_items: lineItems,
           shipping_address: shippingAddress,
-          note: `Dustid gift — delivering to ${contact.name}`,
+          note: `DUSTID LITE gift — delivering to ${contact.name}`,
           tags: "dustid-gift",
         },
       }),
