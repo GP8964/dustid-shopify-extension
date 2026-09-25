@@ -1,6 +1,6 @@
-# Dustid Lite – Getting Started Guide
+# DUSTID LITE – Getting Started Guide
 
-This guide walks you through cloning the repo and getting the Dustid Lite Shopify extension running locally on your machine.
+This guide walks you through cloning the repo and getting the DUSTID LITE Shopify extension running locally on your machine.
 
 ---
 
@@ -20,7 +20,7 @@ You will also need:
 
 - A **Shopify Partner account** — [partners.shopify.com](https://partners.shopify.com)
 - A **Shopify Development Store** created from your Partner dashboard
-- Access to the **Dustid Shopify app** on the Partner account (contact the team if you don't have access)
+- Access to the **DUSTID LITE Shopify app** on the Partner account (contact the team if you don't have access)
 
 ---
 
@@ -94,7 +94,7 @@ After the dev server is running:
 1. Go to your Shopify Admin → **Online Store** → **Themes** → **Customize**
 2. In the theme editor, click on any **Section** in the left sidebar
 3. Click **Add block** → switch to the **Apps** tab
-4. Select **Dustid Gift Selector**
+4. Select **DUSTID LITE Gift Selector**
 5. Click **Save**
 
 The banner should now appear on your storefront.

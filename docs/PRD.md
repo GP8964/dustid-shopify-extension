@@ -1,6 +1,6 @@
-Dustid Lite – Technical Summary 
+DUSTID LITE – Technical Summary
 Overview
-Dustid Lite enables customers to send gifts without manually entering delivery addresses by selecting a saved contact. The system securely maps recipient addresses during checkout through platform-specific integrations.
+DUSTID LITE enables customers to send gifts without manually entering delivery addresses by selecting a saved contact. The system securely maps recipient addresses during checkout through platform-specific integrations.
 The product operates differently across platforms due to checkout visibility and platform constraints, particularly between Shopify and WooCommerce.
 
 1. Customer Experience (Shopper Side)
@@ -8,8 +8,8 @@ Core Requirement (Important Update)
 On Shopify
 The customer must:
 
-Have a Dustid account
-Have saved contacts in the Dustid app
+Have a DUSTID account
+Have saved contacts in the DUSTID app
 
 Be granted permission by the recipient to use their address
 :point_right: Reason: Shopify exposes address details during checkout, so privacy and consent must be enforced
@@ -18,7 +18,7 @@ Be granted permission by the recipient to use their address
 Frontend Architecture (Shopify)
 Theme App Extension (App Block)
 Embedded across store pages
-Displays Dustid widget
+Displays DUSTID LITE widget
 Handles:
 
 Contact selection
@@ -48,7 +48,7 @@ Not visible on checkout (Shopify restriction)
 
 Core Technical Flow (Shopify)
 
-User logs into Dustid
+User logs into DUSTID LITE
 Backend verifies identity
 User fetches contacts (filtered by permission)
 User selects contact
